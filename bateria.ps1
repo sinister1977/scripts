@@ -1,15 +1,15 @@
-# Comando para obtener el número de serie del equipo con PowerShell
+# Comando para obtener el nÃºmero de serie del equipo con PowerShell
 $powershellCommand = "(Get-WmiObject -Class Win32_Bios).SerialNumber"
 $serialNumber = Invoke-Expression -Command $powershellCommand
 
-# Comando a ejecutar en PowerShell para generar el informe de batería
+# Comando a ejecutar en PowerShell para generar el informe de baterÃ­a
 $batteryReportCommand = "powercfg /batteryreport"
 Invoke-Expression -Command $batteryReportCommand
 
 # Obtener la ruta de %userprofile%
 $userProfilePath = [System.Environment]::GetFolderPath('UserProfile')
 
-# Mover el archivo del informe de batería a la ruta de %userprofile%
+# Mover el archivo del informe de baterÃ­a a la ruta de %userprofile%
 $sourceFile = Join-Path -Path $userProfilePath -ChildPath "battery-report.html"
 $destinationFile = Join-Path -Path $userProfilePath -ChildPath "battery-report.html"
 
@@ -17,20 +17,20 @@ if (Test-Path $sourceFile) {
     Move-Item -Path $sourceFile -Destination $destinationFile
 }
 else {
-    Write-Host "El archivo del informe de batería no se encontró en la ubicación especificada: $sourceFile"
+    Write-Host "El archivo del informe de baterÃ­a no se encontrÃ³ en la ubicaciÃ³n especificada: $sourceFile"
 }
 
-# Configurar detalles del correo electrónico
+# Configurar detalles del correo electrÃ³nico
 $smtpServer = "smtp.gmail.com"
 $smtpPort = 587
 $smtpUsername = "solexactivosscl@gmail.com"
 $smtpPassword = ConvertTo-SecureString "fznm abuv tsjl nbcj" -AsPlainText -Force
 $emailFrom = "solexactivosscl@gmail.com"
 $emailTo = "tickets@solex.biz"
-$emailSubject = "Inventario SOLEX"
-$emailBody = "Adjunto encontrarás el inventario del equipo."
+$emailSubject = "Inventario Bateria SOLEX"
+$emailBody = "Adjunto encontrarÃ¡s el reporte de bateria SOLEX ."
 
-# Enviar el correo electrónico con el archivo adjunto
+# Enviar el correo electrÃ³nico con el archivo adjunto
 $mailParams = @{
     SmtpServer        = $smtpServer
     Port              = $smtpPort
