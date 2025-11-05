@@ -7,6 +7,44 @@ Sistema Operativo: $($osInfo.Caption) $($osInfo.Version) (Build $($osInfo.BuildN
 Arquitectura: $($osInfo.OSArchitecture)
 "@
 
+# Obtener información detallada del procesador
+$cpu = Get-CimInstance Win32_Processor
+$cpuName = $cpu.Name.Trim()
+$manufacturer = $cpu.Manufacturer
+$architecture = switch ($cpu.Architecture) {
+    0 { "x86" }
+    1 { "MIPS" }
+    2 { "Alpha" }
+    3 { "PowerPC" }
+    5 { "ARM" }
+    6 { "Itanium" }
+    9 { "x64" }
+    default { "Desconocida" }
+}
+
+# Detectar generación (para Intel)
+$generation = "N/A"
+if ($manufacturer -match "Intel") {
+    if ($cpuName -match "i[0-9]-([0-9]{3,4})[A-Za-z]?") {
+        $genNumber = $Matches[1].Substring(0, 1)
+        $generation = "${genNumber}ª Generación"
+    } elseif ($cpuName -match "Intel.*(Core|Pentium|Celeron)") {
+        $generation = "Modelo antiguo (pre-generaciones)"
+    }
+} elseif ($manufacturer -match "AMD") {
+    $generation = "AMD " + ($cpuName -replace ".*(Ryzen|EPYC|Threadripper|Athlon|FX).*", '$1')
+}
+
+$strCpuInfo = @"
+Información del procesador:
+
+Fabricante:   $($manufacturer -replace 'Genuine', '')
+Modelo:       $cpuName
+Generación:   $generation
+Arquitectura: $architecture
+Núcleos:      $($cpu.NumberOfCores) físicos, $($cpu.NumberOfLogicalProcessors) lógicos
+"@
+
 # Obtener información del sistema
 $objWMIService = Get-CimInstance -ClassName Win32_ComputerSystem
 
@@ -73,6 +111,7 @@ $antivirusInfo = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName Anti
 
 # Construir la cadena de información
 $strInfo = "$strOsInfo`r`n"
+$strInfo += "$strCpuInfo`r`n"
 $strInfo += "Nombre del equipo: $($objWMIService.Name)`r`n"
 $strInfo += "Fabricante: $($objWMIService.Manufacturer)`r`n"
 $strInfo += "Modelo: $($objWMIService.Model)`r`n"
@@ -104,10 +143,10 @@ while ($attempts -gt 0) {
 }
 
 # Enviar correo electrónico con el archivo adjunto
-$smtp_server = "smtp.gmail.com"
+$smtp_server = "smtp.zoho.com"
 $smtp_port = 587
-$smtp_username = "solexactivosscl@gmail.com"
-$smtp_password = "fznm abuv tsjl nbcj"
+$smtp_username = "ssanmartinc@zohomail.com"
+$smtp_password = "ternissi2019"
 $cred = New-Object System.Net.NetworkCredential($smtp_username, $smtp_password)
 $email_to = @("sergio.sanmartin@solex.biz", "ernesto.perez@solex.biz", "richard.buitrago@solex.biz")
 
