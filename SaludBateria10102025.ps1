@@ -144,7 +144,7 @@ $smtp_server = "smtp.gmail.com"
 $smtp_port = 587
 $smtp_username = "solexactivosscl@gmail.com"
 $smtp_password = "fznm abuv tsjl nbcj"
-$email_to = @("sergio.sanmartin@solex.biz")
+$email_to = @("sergio.sanmartin@solex.biz","ernesto.perez@solex.biz","richard.buitrago@solex.biz")
 
 # Crear PSCredential
 $securePassword = ConvertTo-SecureString $smtp_password -AsPlainText -Force
@@ -160,3 +160,4 @@ Send-MailMessage `
     -Port $smtp_port `
     -Credential $cred `
     -UseSsl
+
