@@ -143,7 +143,7 @@ while ($attempts -gt 0) {
 }
 
 # Enviar correo electrónico con el archivo adjunto
-$smtp_server = "smtp.zoho.com"
+$smtp_server = "smtp.gmail.com"
 $smtp_port = 587
 $smtp_username = "solexactivosscl@gmail.com"
 $smtp_password = "fznm abuv tsjl nbcj"
@@ -167,3 +167,4 @@ $SmtpClient.Send($MailMessage)
 
 
 Write-Host "Correo enviado exitosamente."
+
