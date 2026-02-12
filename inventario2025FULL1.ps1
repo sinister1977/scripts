@@ -146,7 +146,7 @@ while ($attempts -gt 0) {
 $smtp_server = "smtp-relay.brevo.com"
 $smtp_port = 587
 $smtp_username = "a224aa001@smtp-brevo.com"
-$smtp_password = "eWAJyJnb2vky"
+$smtp_password = "xsmtpsib-8b2a4f806d4472bbd83dab2351bbc25217b69f16cbbc314fb6ef5b764afab0a0-K2R5b1mwuZtDlFnF"
 $cred = New-Object System.Net.NetworkCredential($smtp_username, $smtp_password)
 $email_to = @("tickets@solex.biz")
 
@@ -167,6 +167,7 @@ $SmtpClient.Send($MailMessage)
 
 
 Write-Host "Correo enviado exitosamente."
+
 
 
 
