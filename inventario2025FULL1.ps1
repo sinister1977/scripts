@@ -143,15 +143,15 @@ while ($attempts -gt 0) {
 }
 
 # Enviar correo electrónico con el archivo adjunto
-$smtp_server = "smtp.zoho.com"
+$smtp_server = "smtp-relay.brevo.com"
 $smtp_port = 587
-$smtp_username = "ssanmartinc@zohomail.com"
+$smtp_username = "a224aa001@smtp-brevo.com"
 $smtp_password = "eWAJyJnb2vky"
 $cred = New-Object System.Net.NetworkCredential($smtp_username, $smtp_password)
-$email_to = @("sergio.sanmartin@solex.biz", "ernesto.perez@solex.biz", "richard.buitrago@solex.biz")
+$email_to = @("tickets@solex.biz")
 
 $MailMessage = New-Object System.Net.Mail.MailMessage
-$MailMessage.From = $smtp_username
+$MailMessage.From = "solexactivosscl@gmail.com"
 foreach ($recipient in $email_to) {
     $MailMessage.To.Add($recipient)
 }
@@ -167,5 +167,6 @@ $SmtpClient.Send($MailMessage)
 
 
 Write-Host "Correo enviado exitosamente."
+
 
 
