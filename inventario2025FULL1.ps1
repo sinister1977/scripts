@@ -1,4 +1,4 @@
-# Obtener informaciÃ³n del sistema operativo
+# Obtener informacion del sistema operativo
 $osInfo = Get-CimInstance Win32_OperatingSystem
 $strOsInfo = @"
 InformaciÃ³n del sistema operativo:
@@ -7,7 +7,7 @@ Sistema Operativo: $($osInfo.Caption) $($osInfo.Version) (Build $($osInfo.BuildN
 Arquitectura: $($osInfo.OSArchitecture)
 "@
 
-# Obtener informaciÃ³n detallada del procesador
+# Obtener informacion detallada del procesador
 $cpu = Get-CimInstance Win32_Processor
 $cpuName = $cpu.Name.Trim()
 $manufacturer = $cpu.Manufacturer
@@ -22,7 +22,7 @@ $architecture = switch ($cpu.Architecture) {
     default { "Desconocida" }
 }
 
-# Detectar generaciÃ³n (para Intel)
+# Detectar generacion (para Intel)
 $generation = "N/A"
 if ($manufacturer -match "Intel") {
     if ($cpuName -match "i[0-9]-([0-9]{3,4})[A-Za-z]?") {
@@ -36,7 +36,7 @@ if ($manufacturer -match "Intel") {
 }
 
 $strCpuInfo = @"
-InformaciÃ³n del procesador:
+Informacion del procesador:
 
 Fabricante:   $($manufacturer -replace 'Genuine', '')
 Modelo:       $cpuName
@@ -45,7 +45,7 @@ Arquitectura: $architecture
 NÃºcleos:      $($cpu.NumberOfCores) fÃ­sicos, $($cpu.NumberOfLogicalProcessors) lÃ³gicos
 "@
 
-# Obtener informaciÃ³n del sistema
+# Obtener informacion del sistema
 $objWMIService = Get-CimInstance -ClassName Win32_ComputerSystem
 
 # Obtener direcciones MAC de tarjetas de red
@@ -58,21 +58,21 @@ foreach ($objAdapter in $colNetworkAdapters) {
     }
 }
 
-# Obtener informaciÃ³n de la computadora
+# Obtener informacion de la computadora
 $colBIOS = Get-CimInstance -Class Win32_BIOS
 $colPhysicalMemory = Get-CimInstance -Class Win32_PhysicalMemory
 $colDiskDrive = Get-CimInstance -Class Win32_DiskDrive
 
-# Obtener el Service Tag (NÃºmero de serie del equipo)
+# Obtener el Service Tag (Numero de serie del equipo)
 $serviceTag = (Get-CimInstance Win32_BIOS | Select-Object -ExpandProperty SerialNumber).Trim()
 
-# Obtener sesiÃ³n de usuario
+# Obtener sesion de usuario
 $userSession = whoami
 
 # Obtener la fecha y hora actual en formato DDMMYYYY-HHMMSS
 $timestamp = Get-Date -Format "ddMMyyyy-HHmmss"
 
-# Obtener direcciones IP internas y pÃºblica
+# Obtener direcciones IP internas y publica
 $networkInterfaces = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }
 $internalIPs = $networkInterfaces | ForEach-Object {
     $interfaceName = $_.Name
@@ -85,7 +85,7 @@ $locationData = Invoke-WebRequest -Uri "http://ipinfo.io/$publicIP/json" | Conve
 $location = "$($locationData.city), $($locationData.country)"
 $provider = $locationData.org
 
-# Obtener informaciÃ³n del disco duro
+# Obtener informacion del disco duro
 $strDiskInfo = "`r`nCapacidad total del disco duro instalado y tipo de disco duro:`r`n" 
 foreach ($disk in $colDiskDrive) {
     $strDiskInfo += "Modelo: $($disk.Model)`r`n"
@@ -93,7 +93,7 @@ foreach ($disk in $colDiskDrive) {
     $strDiskInfo += "Tipo: $($disk.MediaType)`r`n"
 }
 
-# Obtener informaciÃ³n de la memoria RAM
+# Obtener informacion de la memoria RAM
 $strRAMInfo = "`r`nInformaciÃ³n de la memoria RAM instalada:`r`n" 
 foreach ($ram in $colPhysicalMemory) {
     $strRAMInfo += "Fabricante: $($ram.Manufacturer)`r`n"
@@ -105,11 +105,11 @@ foreach ($ram in $colPhysicalMemory) {
 $installedPrograms = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | 
     Select-Object DisplayName, InstallDate | Sort-Object DisplayName | Format-Table -AutoSize | Out-String
 
-# Obtener informaciÃ³n del antivirus
+# Obtener informacion del antivirus
 $antivirusInfo = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct | 
     Select-Object displayName, productState | Format-Table -AutoSize | Out-String
 
-# Construir la cadena de informaciÃ³n
+# Construir la cadena de informacion
 $strInfo = "$strOsInfo`r`n"
 $strInfo += "$strCpuInfo`r`n"
 $strInfo += "Nombre del equipo: $($objWMIService.Name)`r`n"
@@ -125,10 +125,10 @@ $strInfo += "$strRAMInfo"
 $strInfo += "`r`nProgramas instalados:`r`n$installedPrograms"
 $strInfo += "`r`nInformaciÃ³n del antivirus:`r`n$antivirusInfo"
 
-# Guardar informaciÃ³n en archivo con nombre personalizado
+# Guardar informacion en archivo con nombre personalizado
 $strFilePath = "$env:USERPROFILE\Inventario_$($objWMIService.Name)_$timestamp.txt"
 
-# Verificar si el archivo estÃ¡ en uso antes de escribir
+# Verificar si el archivo esta en uso antes de escribir
 $attempts = 5
 while ($attempts -gt 0) {
     try {
@@ -170,3 +170,4 @@ $SmtpClient.Send($MailMessage)
 
 
 Write-Host "Correo enviado exitosamente."
+
