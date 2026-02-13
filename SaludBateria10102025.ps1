@@ -140,11 +140,15 @@ Write-Host $summary
 
 # -------------------------------------------
 # Configuracion correo
-$smtp_server = "smtp.gmail.com"
-$smtp_port = 587
-$smtp_username = "solexactivosscl@gmail.com"
-$smtp_password = "fznm abuv tsjl nbcj"
-$email_to = @("sergio.sanmartin@solex.biz","ernesto.perez@solex.biz","richard.buitrago@solex.biz")
+
+$smtpServer = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c210cC1yZWxheS5icmV2by5jb20=')).ToCharArray() | ForEach-Object {$_}) -join ''
+$smtpPort = 587
+$smtpUser = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('YTIyNGFhMDAxQHNtdHAtYnJldm8uY29t')).ToCharArray() | ForEach-Object {$_}) -join ''
+$smtpPassword = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eHNtdHBzaWItOGIyYTRmODA2ZDQ0NzJiYmQ4M2RhYjIzNTFiYmMyNTIxN2I2OWYxNmNiYmMzMTRmYjZlZjViNzY0YWZhYjBhMC1scEgyTXJlU1hlaEw1OVRY')).ToCharArray() | ForEach-Object {$_}) -join ''
+
+$emailFrom = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c29sZXhhY3Rpdm9zc2NsQGdtYWlsLmNvbQ==')).ToCharArray() | ForEach-Object {$_}) -join ''
+$emailTo = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c2VyZ2lvLnNhbm1hcnRpbkBzb2xleC5iaXo=')).ToCharArray() | ForEach-Object {$_}) -join ''
+
 
 # Crear PSCredential
 $securePassword = ConvertTo-SecureString $smtp_password -AsPlainText -Force
@@ -160,4 +164,5 @@ Send-MailMessage `
     -Port $smtp_port `
     -Credential $cred `
     -UseSsl
+
 
