@@ -1,15 +1,15 @@
-# Comando para obtener el número de serie del equipo con PowerShell
+# Comando para obtener el nÃºmero de serie del equipo con PowerShell
 $powershellCommand = "(Get-WmiObject -Class Win32_Bios).SerialNumber"
 $serialNumber = Invoke-Expression -Command $powershellCommand
 
-# Comando a ejecutar en PowerShell para generar el informe de batería
+# Comando a ejecutar en PowerShell para generar el informe de baterÃ­a
 $batteryReportCommand = "powercfg /batteryreport"
 Invoke-Expression -Command $batteryReportCommand
 
 # Obtener la ruta de %userprofile%
 $userProfilePath = [System.Environment]::GetFolderPath('UserProfile')
 
-# Mover el archivo del informe de batería a la ruta de %userprofile%
+# Mover el archivo del informe de baterÃ­a a la ruta de %userprofile%
 $sourceFile = Join-Path -Path $userProfilePath -ChildPath "battery-report.html"
 $destinationFile = Join-Path -Path $userProfilePath -ChildPath "battery-report.html"
 
@@ -17,20 +17,19 @@ if (Test-Path $sourceFile) {
     Move-Item -Path $sourceFile -Destination $destinationFile
 }
 else {
-    Write-Host "El archivo del informe de batería no se encontró en la ubicación especificada: $sourceFile"
+    Write-Host "El archivo del informe de baterÃ­a no se encontrÃ³ en la ubicaciÃ³n especificada: $sourceFile"
 }
-
-# Configurar detalles del correo electrónico
-$smtpServer = "smtp.gmail.com"
+$smtpServer = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c210cC1yZWxheS5icmV2by5jb20=')).ToCharArray() | ForEach-Object {$_}) -join ''
 $smtpPort = 587
-$smtpUsername = "solexactivosscl@gmail.com"
-$smtpPassword = ConvertTo-SecureString "fznm abuv tsjl nbcj" -AsPlainText -Force
-$emailFrom = "solexactivosscl@gmail.com"
-$emailTo = "tickets@solex.biz"
-$emailSubject = "Reporte de bateria"
-$emailBody = "Adjunto encontrarás el inventario del equipo."
+$smtpUser = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('YTIyNGFhMDAxQHNtdHAtYnJldm8uY29t')).ToCharArray() | ForEach-Object {$_}) -join ''
+$smtpPassword = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eHNtdHBzaWItOGIyYTRmODA2ZDQ0NzJiYmQ4M2RhYjIzNTFiYmMyNTIxN2I2OWYxNmNiYmMzMTRmYjZlZjViNzY0YWZhYjBhMC1scEgyTXJlU1hlaEw1OVRY')).ToCharArray() | ForEach-Object {$_}) -join ''
 
-# Enviar el correo electrónico con el archivo adjunto
+$emailFrom = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c29sZXhhY3Rpdm9zc2NsQGdtYWlsLmNvbQ==')).ToCharArray() | ForEach-Object {$_}) -join ''
+$emailTo = (-join [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c2VyZ2lvLnNhbm1hcnRpbkBzb2xleC5iaXo=')).ToCharArray() | ForEach-Object {$_}) -join ''
+
+
+
+# Enviar el correo electrÃ³nico con el archivo adjunto
 $mailParams = @{
     SmtpServer        = $smtpServer
     Port              = $smtpPort
@@ -44,3 +43,4 @@ $mailParams = @{
 }
 
 Send-MailMessage @mailParams
+
